@@ -2,35 +2,86 @@ import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Core() {
-    // State for Add Expense
+
+
     const [title, setTitle] = useState("");
     const [amount, setAmount] = useState("");
     const [description, setDescription] = useState("");
 
-    // State for Update Expense
     const [expenseId, setExpenseId] = useState("");
     const [newTitle, setNewTitle] = useState("");
     const [newAmount, setNewAmount] = useState("");
 
-    // Handle form submission for adding expense
-    const handleAddSubmit = (event) => {
+    
+    const handleAddSubmit = async (event) => {
         event.preventDefault();
-        console.log("New Expense Added:", { title, amount, description });
-        // Reset form fields after submission
-        setTitle("");
-        setAmount("");
-        setDescription("");
+
+        const expenseData = {
+            title: title,
+            amount: parseFloat(amount)  // Convert amount to number
+        };
+
+        try {
+            const response = await fetch('http://localhost:8081/api/expenses', {  // Replace with your actual base URL
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(expenseData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("New Expense Added:", result);
+
+            // Clear form fields after successful submission
+            setTitle("");
+            setAmount("");
+            setDescription("");
+        } catch (error) {
+            console.error('Error adding expense:', error);
+        }
     };
 
-    // Handle form submission for updating expense
-    const handleUpdateSubmit = (event) => {
+    
+    const handleUpdateSubmit = async (event) => {
         event.preventDefault();
-        console.log("Expense Updated:", { expenseId, newTitle, newAmount });
-        // Reset form fields after submission
-        setExpenseId("");
-        setNewTitle("");
-        setNewAmount("");
+
+        // Ensure that `expenseId` is a number
+        const id = parseInt(expenseId);
+        const updatedExpenseData = {
+            title: newTitle,
+            amount: parseFloat(newAmount)  // Convert amount to number
+        };
+
+        try {
+            const response = await fetch(`http://localhost:8081/api/expenses/${id}`, {  // Replace with your actual base URL
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedExpenseData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log("Expense Updated:", result);
+
+            // Clear form fields after successful update
+            setExpenseId("");
+            setNewTitle("");
+            setNewAmount("");
+        } catch (error) {
+            console.error('Error updating expense:', error);
+        }
     };
+
 
     return (
         <div className="container mt-5">
