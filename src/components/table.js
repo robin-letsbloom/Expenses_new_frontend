@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import DataTable from "react-data-table-component";
+import { base } from "./core";
 
 function Tables() {
   const [records, setRecords] = useState([]); 
 
   
   useEffect(() => {
-    fetch('http://localhost:8081/api/expenses')  
+    fetch(base)  
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

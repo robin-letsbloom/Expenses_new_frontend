@@ -1,5 +1,5 @@
 import React from "react";
-import Img from "/Users/robinsaw/Desktop/frontenet_exp/Expenses_new_frontend copy/src/resources/latest_img.png";
+import Img from "../resources/latest_img.png";
 
 function Header() {
     return (

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
+export const base = 'http://localhost:8082/api/expenses';
+
 
 function Core() {
 
@@ -22,7 +24,7 @@ function Core() {
         };
 
         try {
-            const response = await fetch('http://localhost:8081/api/expenses', {  // Replace with your actual base URL
+            const response = await fetch(base, {  // Replace with your actual base URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -58,7 +60,7 @@ function Core() {
         };
 
         try {
-            const response = await fetch(`http://localhost:8081/api/expenses/${id}`, {  // Replace with your actual base URL
+            const response = await fetch(`${base}/${id}`, {  // Replace with your actual base URL
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
