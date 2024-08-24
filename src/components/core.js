@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-export const base = 'http://localhost:8082/api/expenses';
+export const base = 'http://34.93.246.74:8082/api/expenses';
 
 
 function Core() {
